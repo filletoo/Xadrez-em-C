@@ -544,5 +544,6 @@ int main (){
 
     system("pause");
     fclose(mapa_t);
+    fclose(partida);
     return 0;
 }
