@@ -4,8 +4,8 @@
 #include <Windows.h>
 #define BRANCO 0
 #define PRETO 1
-#define CAMINHO_MAPA "tabuleiro2.txt"
-#define SKINS "ptkndrPTKNDR "
+#define CAMINHO_MAPA "tabuleiro.txt"
+#define SKINS "prbnqkPRBNQK "
 
 typedef struct{
     char tipo;
@@ -298,12 +298,12 @@ void configpeca(Peca *tempP, char temp){
     if (temp >= 'a' && temp <= 'z') tempP->cor = PRETO;
     else if (temp != ' ') tempP->cor = BRANCO;
 
-    if (tolower(temp) == 't') {
+    if (tolower(temp) == 'r') {
         tempP->valor = 5;
         tempP->V[0] = 9; tempP->V[1] = 9;
         tempP->H[0] = 9; tempP->H[1] = 9;
     }
-    else if (tolower(temp) == 'k') {
+    else if (tolower(temp) == 'n') {
         int n = 1;
         tempP->valor = 3;
         tempP->E[1][0] = -2; tempP->E[1][1] = -1; 
@@ -342,19 +342,19 @@ void configpeca(Peca *tempP, char temp){
         tempP->valor = 1;
         tempP->V[1] = 2;
     }
-    else if (tolower(temp) == 'n') {
+    else if (tolower(temp) == 'b') {
         tempP->valor = 3;
         tempP->D[0] = 9; tempP->D[1] = 9;
         tempP->D[2] = 9; tempP->D[3] = 9;
     }
-    else if (tolower(temp) == 'd') {
+    else if (tolower(temp) == 'q') {
         tempP->valor = 9;
         tempP->D[0] = 9; tempP->D[1] = 9;
         tempP->D[2] = 9; tempP->D[3] = 9;
         tempP->V[0] = 9; tempP->V[1] = 9;
         tempP->H[0] = 9; tempP->H[1] = 9;
     }
-    else if (tolower(temp) == 'r') {
+    else if (tolower(temp) == 'k') {
         tempP->D[0] = 1; tempP->D[1] = 1;
         tempP->D[2] = 1; tempP->D[3] = 1;
         tempP->V[0] = 1; tempP->V[1] = 1;
@@ -401,7 +401,7 @@ void simullistarMove(Peca *p, Peca tabuP[8][8]){
                 if (c_tabuP[j][k].tipo != ' '){
                     if (c_tabuP[j][k].cor != p->cor)
                         listarMove(&c_tabuP[j][k], c_tabuP);
-                    else if (tolower(c_tabuP[j][k].tipo) == 'r') rei = c_tabuP[j][k];
+                    else if (tolower(c_tabuP[j][k].tipo) == 'k') rei = c_tabuP[j][k];
                 }
             }
         }
@@ -471,7 +471,7 @@ int main (){
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 if (tabuP[i][j].cor + vez == 1) listarMove(&tabuP[i][j], tabuP);
-                if (tolower(tabuP[i][j].tipo) == 'r' && tabuP[i][j].cor != vez) 
+                if (tolower(tabuP[i][j].tipo) == 'k' && tabuP[i][j].cor != vez) 
                     rei = tabuP[i][j];
                 if (tabuP[i][j].cor == vez){
                     listarMove(&tabuP[i][j], tabuP);
