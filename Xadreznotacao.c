@@ -524,7 +524,9 @@ int main (){
     char apromo;
 
     while (1){
+        system("cls");
         printtabu(tabuC);
+        
         //pontuação
         pontos_branco = 0; pontos_preto = 0;
         for (int i = 0; i < 8; i++){
@@ -535,7 +537,7 @@ int main (){
         }
         if (pontos_branco >= pontos_preto) printf("Branco: +%d\n", pontos_branco - pontos_preto);
         else printf("Preto: +%d\n", pontos_preto - pontos_branco);
-
+        
         //em check
         qtdmove = 0;
         for (int i = 0; i < 8; i++){
@@ -550,6 +552,7 @@ int main (){
                 }
             }
         }
+
         check = emcheck(rei, tabuP);
         if (qtdmove == 0){
             if (check){
@@ -561,7 +564,7 @@ int main (){
             }
         }else if (check) printf("Check!\n");
 
-        //Sleep(delay);
+        Sleep(delay);
         //ler input
         do{
             fscanf(partida, "%s", jog);
@@ -587,11 +590,12 @@ int main (){
         listarMove(porg, tabuP);
         simullistarMove(porg, tabuP);
 
+        system("cls");
         atlzcomx(inp_org, tabuP, tabuC);
         printtabu(tabuC);
-
+        
         //system("pause");
-        //Sleep(delay);
+        Sleep(delay);
         
         pdest = &tabuP[stdtoi(inp_dest[1])][stdtoi(inp_dest[0])];
 
@@ -608,6 +612,7 @@ int main (){
     }
 
     printf("terminou\n");
+    system("pause");
     fclose(partida);
     fclose(mapa_t);
     return 0;
