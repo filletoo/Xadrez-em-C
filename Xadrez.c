@@ -5,7 +5,7 @@
 #define BRANCO 0
 #define PRETO 1
 #define CAMINHO_MAPA "tabuleiro.txt"
-#define SKINS "prbnqkPRBNQK "
+#define SKINS "prbnqklPRBNQKL "
 
 typedef struct{
     char tipo;
@@ -50,6 +50,7 @@ int existemoveval(Peca *p, int linha, int coluna){
 
 void movepeao(Peca *p, Peca tabuP[8][8], char inp_org_ant[3]){
     int enpassant[4] = {0,0,0,0};
+
     if (p->pos[0] != 6 && p->cor == BRANCO){
         if (tabuP[p->pos[0] - 1][p->pos[1]].cor == PRETO) p->V[1] = 0;
         else p->V[1] = 1;
@@ -69,16 +70,18 @@ void movepeao(Peca *p, Peca tabuP[8][8], char inp_org_ant[3]){
     if (p->cor == BRANCO && p->pos[0] == 3){
         if (inp_org_ant[1] == '7'){
             if (p->pos[1] + 1 < 8 && tabuP[p->pos[0]][p->pos[1] + 1].tipo == 'p' && stdtoi(inp_org_ant[0]) == p->pos[1] + 1)
-                p->D[0] = enpassant[0] = 1; 
+                p->D[0] = enpassant[0] = 1;
+                //printf("%d\n", enpassant[0]);
             if (p->pos[1] - 1 >= 0 && tabuP[p->pos[0]][p->pos[1] - 1].tipo == 'p' && stdtoi(inp_org_ant[0]) == p->pos[1] - 1)
-                p->D[1] = enpassant[1] = 1; 
+                p->D[1] = enpassant[1] = 1;
+                //printf("%d\n", enpassant[1]); 
         }
     }else if (p->cor == PRETO && p->pos[0] == 4){
         if (inp_org_ant[1] == '2'){
             if (p->pos[1] + 1 < 8 && tabuP[p->pos[0]][p->pos[1] + 1].tipo == 'P' && stdtoi(inp_org_ant[0]) == p->pos[1] + 1)
-                p->D[3] = enpassant[3] = 1; 
+                p->D[3] = enpassant[3] = 1;
             if (p->pos[1] - 1 >= 0 && tabuP[p->pos[0]][p->pos[1] - 1].tipo == 'P' && stdtoi(inp_org_ant[0]) == p->pos[1] - 1)
-                p->D[2] = enpassant[2] = 1; 
+                p->D[2] = enpassant[2] = 1;
         }
     }
 
@@ -88,21 +91,21 @@ void movepeao(Peca *p, Peca tabuP[8][8], char inp_org_ant[3]){
         //diagonal 1
         if (p->cor == BRANCO && tabuP[p->pos[0] - 1][p->pos[1] + 1].cor == PRETO ){
             p->D[0] = 1;
-        }else if (!enpassant[0]) p->D[0] = 0;
+        }//else if (enpassant[0] == 0) p->D[0] = 0;
         //diagonal 4
         if (p->cor == PRETO && tabuP[p->pos[0] + 1][p->pos[1] + 1].cor == BRANCO ){
             p->D[3] = 1;
-        }else if (!enpassant[3]) p->D[3] = 0;
+        }//else if (enpassant[3] == 0) p->D[3] = 0;
     }
     if (p->pos[1] != 0){
         //diagonal 2
         if (p->cor == BRANCO && tabuP[p->pos[0] - 1][p->pos[1] - 1].cor == PRETO ){
             p->D[1] = 1;
-        }else if (!enpassant[1]) p->D[1] = 0;
+        }//else if (enpassant[1] == 0) p->D[1] = 0;
         //diagonal 3
         if (p->cor == PRETO && tabuP[p->pos[0] + 1][p->pos[1] - 1].cor == BRANCO ){
             p->D[2] = 1;
-        }else if (!enpassant[2]) p->D[2] = 0;
+        }//else if (enpassant[2] == 0) p->D[2] = 0;
     }
 }
 
@@ -359,6 +362,11 @@ void configpeca(Peca *tempP, char temp){
         tempP->D[2] = 1; tempP->D[3] = 1;
         tempP->V[0] = 1; tempP->V[1] = 1;
         tempP->H[0] = 1; tempP->H[1] = 1;
+    }else if (tolower(temp) == 'l') {
+        tempP->D[0] = 1; tempP->D[1] = 1;
+        tempP->D[2] = 1; tempP->D[3] = 1;
+        tempP->V[0] = 1; tempP->V[1] = 1;
+        tempP->H[0] = 1; tempP->H[1] = 1;
     }
 }
 
@@ -531,6 +539,7 @@ int main (){
         }
 
         strcpy(inp_org_ant, inp_org); strcpy(inp_dest_ant, inp_dest);
+        printf("%s", inp_org_ant);
         atlztabuC(tabuC, tabuP);
     }
 
